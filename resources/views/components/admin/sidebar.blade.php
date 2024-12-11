@@ -7,16 +7,16 @@
                 <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo-dark.png') }}" alt="" height="17" />
+                <img src="{{ asset('admin/images/pmc-logo.png') }}" alt="" height="17" />
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
+                <img src="{{ asset('admin/images/Panvel_Municipal_Corporation.png') }}" alt="" height="22" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/images/logo-light.png') }}" alt="" height="17" />
+                <img src="{{ asset('admin/images/logo.png') }}" alt="" height="50" />
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -41,14 +41,17 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link menu-link" href="#masters" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="ri-layout-3-line"></i>
                         <span data-key="t-layouts">Masters</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                    <div class="collapse menu-dropdown" id="masters">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('wards.index') }}" class="nav-link" data-key="t-horizontal">Wards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('property-types.index') }}" class="nav-link" data-key="t-horizontal">Property Type</a>
                             </li>
                         </ul>
                     </div>
@@ -57,11 +60,11 @@
 
                 @canany(['users.view', 'roles.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link menu-link" href="#userManagement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="bx bx-user-circle"></i>
                         <span data-key="t-layouts">User Management</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                    <div class="collapse menu-dropdown" id="userManagement">
                         <ul class="nav nav-sm flex-column">
                             @can('users.view')
                                 <li class="nav-item">
