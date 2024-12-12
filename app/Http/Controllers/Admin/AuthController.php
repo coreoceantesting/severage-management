@@ -129,4 +129,51 @@ class AuthController extends Controller
         }
     }
 
+    public function citizenRegister(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|max:255', 
+                'email' => 'required|email|max:255',
+                'mobile' => 'required|numeric|digits:10',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|same:password',
+            ]);
+    
+            DB::beginTransaction();
+    
+            $input = $request->all();
+            $input['password'] = Hash::make($input['password']);
+    
+           
+            $citizenId = DB::table('users')->insertGetId([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'mobile' => $input['mobile'],
+                'password' => $input['password'],
+            ]);
+    
+            
+            DB::table('model_has_roles')->insert([
+                'role_id' => 3, 
+                'model_type' => 'App\Models\User', 
+                'model_id' => $citizenId, 
+            ]);
+    
+            DB::commit();
+    
+            return response()->json(['success' => 'Citizen registration successful!']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['error' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error2' => 'An error occurred during registration.'], 500);
+        }
+    }
+
+
+
+    
+
+
 }

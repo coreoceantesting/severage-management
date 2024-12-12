@@ -26,6 +26,7 @@ Route::middleware(['guest', 'PreventBackHistory', 'firewall.all'])->group(functi
     Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('signin');
     Route::get('register', [App\Http\Controllers\Admin\AuthController::class, 'showRegister'])->name('register');
     Route::post('register', [App\Http\Controllers\Admin\AuthController::class, 'register'])->name('signup');
+    Route::post('citizen-register', [App\Http\Controllers\Admin\AuthController::class, 'citizenRegister'])->name('citizenRegister');
 });
 
 
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::get('change-theme-mode', [App\Http\Controllers\Admin\DashboardController::class, 'changeThemeMode'])->name('change-theme-mode');
     Route::get('show-change-password', [App\Http\Controllers\Admin\AuthController::class, 'showChangePassword'])->name('show-change-password');
     Route::post('change-password', [App\Http\Controllers\Admin\AuthController::class, 'changePassword'])->name('change-password');
+
+    
 
 
 

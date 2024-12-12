@@ -154,11 +154,50 @@
 
                                 <div class="mt-2 text-center">
                                     <button class="btn btn-primary w-40" type="submit" id="loginForm_submit">Sign In</button>
-                                    {{-- <p class="mt-3">Don't Have An Account ? <a class="text-primary signUp" style="cursor: pointer;"> Signup </a> </small> --}}
+                                    <p class="mt-3">Don't Have An Account ? <a class="text-primary signUp" style="cursor: pointer;"> Signup </a> </small>
                                 </div>
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Signup Modal -->
+            <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Signup Form Fields -->
+                    <form id="signupForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="signupName" class="form-label">User Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter UserName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">User Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email"  name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupName" class="form-label">User Mobile No <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile No" required maxlength="10" oninput="validateMobileLength(this)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signupSubmit">Sign Up</button>
+                    </form>
+                    </div>
+                </div>
                 </div>
             </div>
         </section>
@@ -256,5 +295,83 @@
                 }
             });
         </script>
+
+    <script>
+        // Open Signup Modal when clicking on "Signup" link
+        document.querySelector('.signUp').addEventListener('click', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('signupModal'));
+        myModal.show();
+        });
+    
+        // Optional: Handling form submission
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+    
+        // Basic validation
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+    
+        // Proceed with form submission logic (e.g., API call, etc.)
+        console.log('User signed up:', { name, email, password });
+    
+        // Close the modal
+        var myModal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+        myModal.hide();
+        });
+    </script>
+
+    <script>
+        $("#signupForm").submit(function(e) {
+            e.preventDefault();
+            $("#signupSubmit").prop('disabled', true);
+
+            var formdata = new FormData(this);
+            $.ajax({
+                url: '{{ route('citizenRegister') }}',
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $("#addSubmit").prop('disabled', false);
+                    if (!data.error2)
+                        swal("Successful!", data.success, "success")
+                        .then((action) => {
+                            location.reload();
+                        });
+                    else
+                        swal("Error!", data.error2, "error");
+                },
+                statusCode: {
+                    422: function(responseObject, textStatus, jqXHR) {
+                        $("#addSubmit").prop('disabled', false);
+                        resetErrors();
+                        printErrMsg(responseObject.responseJSON.errors);
+                    },
+                    500: function(responseObject, textStatus, errorThrown) {
+                        $("#addSubmit").prop('disabled', false);
+                        swal("Error occured!", "Something went wrong please try again", "error");
+                    }
+                }
+            });
+
+        });
+    </script>
+
+<script>
+    function validateMobileLength(input) {
+        if (input.value.length > 10) {
+            input.value = input.value.slice(0, 10); // Restrict input to 10 digits
+        }
+    }
+</script>
+
     </body>
 </html>
