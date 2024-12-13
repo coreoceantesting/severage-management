@@ -81,6 +81,13 @@
                 </li>
                 @endcan
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('apply-for-noc.index') }}" >
+                        <i class="ri-mark-pen-fill"></i>
+                        <span data-key="t-dashboards">Apply For NOC</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

@@ -52,6 +52,10 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::resource('property-types', App\Http\Controllers\Admin\Masters\PropertyTypeController::class);
 
 
+    // NOC routes
+    Route::resource('apply-for-noc', App\Http\Controllers\Admin\Noc\NocController::class);
+
+
 
 
     // Users Roles n Permissions
