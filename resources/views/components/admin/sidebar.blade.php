@@ -53,6 +53,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('property-types.index') }}" class="nav-link" data-key="t-horizontal">Property Type</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('documents.index') }}" class="nav-link" data-key="t-horizontal">Documents</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

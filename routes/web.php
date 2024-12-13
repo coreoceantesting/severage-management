@@ -50,6 +50,7 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     // Masters
     Route::resource('wards', App\Http\Controllers\Admin\Masters\WardController::class);
     Route::resource('property-types', App\Http\Controllers\Admin\Masters\PropertyTypeController::class);
+    Route::resource('documents', App\Http\Controllers\Admin\Masters\DocumentsController::class);
 
 
     // NOC routes
