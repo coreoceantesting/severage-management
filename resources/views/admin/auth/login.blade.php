@@ -154,7 +154,7 @@
 
                                 <div class="mt-2 text-center">
                                     <button class="btn btn-primary w-40" type="submit" id="loginForm_submit">Sign In</button>
-                                    <p class="mt-3">Don't Have An Account ? <a class="text-primary signUp" style="cursor: pointer;"> Signup </a> </small>
+                                    <p class="mt-3">Don't Have An Account ? <a class="text-primary signUp" style="cursor: pointer;"> Signup For Citizen </a> </small>
                                 </div>
                             </form>
                         </div>
@@ -167,7 +167,7 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                    <h5 class="modal-title" id="signupModalLabel">Citizen Sign Up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
