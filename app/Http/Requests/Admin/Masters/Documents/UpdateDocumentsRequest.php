@@ -23,6 +23,7 @@ class UpdateDocumentsRequest extends FormRequest
     {
         return [
             'document_name' => 'required',
+            'document_name_in_marathi' => 'required',
             'is_required' => 'required',
         ];
     }

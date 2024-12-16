@@ -22,6 +22,11 @@
                                     <span class="text-danger is-invalid document_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="document_name_in_marathi">Document Name In Marathi <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="document_name_in_marathi" name="document_name_in_marathi" type="text" placeholder="Enter Document Name In Marathi">
+                                    <span class="text-danger is-invalid document_name_in_marathi_err"></span>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="is_required">Is Required <span class="text-danger">*</span></label>
                                     <select class="form-control" name="is_required" id="is_required">
                                         <option value="">Select</option>
@@ -60,6 +65,11 @@
                                     <label class="col-form-label" for="document_name">Document Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="document_name" name="document_name" type="text" placeholder="Enter Document Name">
                                     <span class="text-danger is-invalid document_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="document_name_in_marathi">Document Name In Marathi <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="document_name_in_marathi" name="document_name_in_marathi" type="text" placeholder="Enter Document Name In Marathi">
+                                    <span class="text-danger is-invalid document_name_in_marathi_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="is_required">Is Required <span class="text-danger">*</span></label>
@@ -103,6 +113,7 @@
                                     <tr>
                                         <th>Sr.No</th>
                                         <th>Document Name</th>
+                                        <th>Document Name In Marathi</th>
                                         <th>Is Required</th>
                                         <th>Action</th>
                                     </tr>
@@ -112,6 +123,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $document->document_name }}</td>
+                                            <td>{{ $document->document_name_in_marathi }}</td>
                                             <td>{{ $document->is_required == 1 ? 'Yes' : 'No' }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit document" data-id="{{ $document->id }}"><i data-feather="edit"></i></button>
@@ -192,6 +204,7 @@
                 {
                     $("#editForm input[name='edit_model_id']").val(data.Documents.id);
                     $("#editForm input[name='document_name']").val(data.Documents.document_name);
+                    $("#editForm input[name='document_name_in_marathi']").val(data.Documents.document_name_in_marathi);
                     $("#editForm select[name='is_required']").val(data.Documents.is_required);
                 }
                 else

@@ -23,6 +23,7 @@ class StoreDocumentsRequest extends FormRequest
     {
         return [
             'document_name' => 'required|unique:documents,document_name',
+            'document_name_in_marathi' => 'required',
             'is_required' => 'required',
         ];
     }

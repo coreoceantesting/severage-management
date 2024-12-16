@@ -11,7 +11,7 @@ class Documents extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['document_name', 'is_required'];
+    protected $fillable = ['document_name', 'is_required', 'document_name_in_marathi'];
 
 
     public static function booted()
