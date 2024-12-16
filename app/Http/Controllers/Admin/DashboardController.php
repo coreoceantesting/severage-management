@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
+use App\Models\Documents;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-        return view('admin.dashboard');
+        $docs = Documents::latest()->get();
+        return view('admin.dashboard')->with(['docs' => $docs]);
     }
 
     public function changeThemeMode()

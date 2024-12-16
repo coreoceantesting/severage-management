@@ -5,6 +5,20 @@
 
     <div class="row">
         <div class="col">
+            @if (Auth::user()->roles->pluck('name')[0] == "Citizen")
+                <div class="card">
+                    <div class="card-header">
+                        Required Documents ( आवश्यक कागदपत्रे )
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            @foreach ($docs as $doc)
+                                <li>{{ $doc->document_name }} ( {{ $doc->document_name_in_marathi }} )</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <div class="d-flex flex-column h-100">
                 <div class="row h-100">
                     <div class="col-12 d-none">
