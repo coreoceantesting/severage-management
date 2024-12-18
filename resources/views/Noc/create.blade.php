@@ -64,6 +64,13 @@
                                     <span class="text-danger is-invalid addhar_no_err"></span>
                                 </div>
 
+                                @foreach ($documents as $documents)
+                                    <div class="col-md-4">
+                                        <label class="col-form-label" for="docs">{{ $documents->document_name }} ( {{ $documents->document_name_in_marathi }} ) @if($documents->is_required == '1')<span class="text-danger">*</span> @endif</label>
+                                        <input class="form-control" id="docs" name="doc[]" type="file" @if($documents->is_required == '1') required @endif>
+                                        <span class="text-danger is-invalid docs_err"></span>
+                                    </div>
+                                @endforeach
                             </div>
 
                         </div>
@@ -88,7 +95,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('wards.store') }}',
+            url: '{{ route('apply-for-noc.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -99,7 +106,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('wards.index') }}';
+                            window.location.href = '{{ route('apply-for-noc.index') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");

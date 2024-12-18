@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Noc;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 use App\Models\PropertyType; 
+use App\Models\Documents;
+use App\Models\Noc;
+use App\Http\Requests\Admin\NOC\StoreNocRequest;
+use Illuminate\Support\Facades\DB;
 
 class NocController extends Controller
 {
@@ -14,7 +18,8 @@ class NocController extends Controller
     public function index()
     {
         $propertyTypes = PropertyType::latest()->get();
-        return view('Noc.create')->with(['propertyTypes' => $propertyTypes]);
+        $documents = Documents::latest()->get();
+        return view('Noc.create')->with(['propertyTypes' => $propertyTypes, 'documents' => $documents]);
     }
 
     /**
@@ -22,15 +27,38 @@ class NocController extends Controller
      */
     public function create()
     {
-        //
+            
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreNocRequest $request)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+            $input = $request->validated();
+            $input['application_id'] = date('Y').'/'.rand(0000,9999);
+            $applicantion = Noc::create($input);
+            if ($request->hasFile('doc')) {
+                foreach ($request->file('doc') as $key => $file) {
+                    $filePath = $file->store('documents', 'public');
+        
+                    DB::table('noc_documents')->insert([
+                        'application_id' => $applicantion->id,
+                        'file_path' => $filePath,
+                    ]);
+                }
+            }
+            DB::commit();
+
+            return response()->json(['success'=> 'NOC created successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'creating', 'NOC');
+        }
     }
 
     /**
