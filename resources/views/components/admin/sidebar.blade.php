@@ -91,6 +91,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('newApplications') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">New Applications</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

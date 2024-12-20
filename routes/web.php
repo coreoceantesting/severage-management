@@ -56,6 +56,9 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     // NOC routes
     Route::resource('apply-for-noc', App\Http\Controllers\Admin\Noc\NocController::class);
 
+    // listing
+    Route::get('new-applications', [App\Http\Controllers\Admin\Noc\ListingController::class, 'newApplications'])->name('newApplications');
+
 
 
 

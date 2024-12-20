@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('noc_documents', function (Blueprint $table) {
             $table->id();
             $table->integer('application_id')->nullable();
-            $table->string('document_name')->nullable();
+            $table->integer('document_id')->nullable();
             $table->string('file_path')->nullable();
             $table->timestamps();
         });

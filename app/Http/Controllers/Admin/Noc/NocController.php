@@ -37,26 +37,39 @@ class NocController extends Controller
     {
         try
         {
+
             DB::beginTransaction();
             $input = $request->validated();
-            $input['application_id'] = date('Y').'/'.rand(0000,9999);
-            $applicantion = Noc::create($input);
-            if ($request->hasFile('doc')) {
+
+            $input['application_id'] = date('Y') . '/' . rand(0000, 9999);
+
+            $application = Noc::create($input);
+
+            if ($request->hasFile('doc') && count($request->file('doc')) > 0) {
+
                 foreach ($request->file('doc') as $key => $file) {
-                    $filePath = $file->store('documents', 'public');
-        
-                    DB::table('noc_documents')->insert([
-                        'application_id' => $applicantion->id,
-                        'file_path' => $filePath,
-                    ]);
+
+                    if ($file) {
+                        $filePath = $file->store('documents', 'public');
+
+                        DB::table('noc_documents')->insert([
+                            'application_id' => $application->id,
+                            'document_id' => $request->input('doc_id')[$key],
+                            'file_path' => $filePath,
+                        ]);
+                    }
+
                 }
+                
             }
             DB::commit();
-
-            return response()->json(['success'=> 'NOC created successfully!']);
+            return response()->json(['success' => 'NOC created successfully!']);
         }
-        catch(\Exception $e)
+        catch (\Exception $e)
         {
+
+            DB::rollBack();
+
             return $this->respondWithAjax($e, 'creating', 'NOC');
         }
     }
@@ -66,7 +79,13 @@ class NocController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $Noc_data = Noc::findorFail($id);
+        $noc_documents = DB::table('noc_documents')->join('documents', 'noc_documents.document_id', '=', 'documents.id')
+                        ->where('application_id', $id)
+                        ->get();
+        $propertyTypes = PropertyType::latest()->get();
+        return view('Noc.show')->with(['Noc_data' => $Noc_data, 'noc_documents' => $noc_documents, 'propertyTypes' => $propertyTypes]);
+        
     }
 
     /**
