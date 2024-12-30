@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\Noc\NocController as NocNocController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\Admin\NOC\NocController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +46,7 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::get('show-change-password', [App\Http\Controllers\Admin\AuthController::class, 'showChangePassword'])->name('show-change-password');
     Route::post('change-password', [App\Http\Controllers\Admin\AuthController::class, 'changePassword'])->name('change-password');
 
-    
+
 
 
 
@@ -54,14 +57,15 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
 
 
     // NOC routes
+    // Route::post('/noc/reject/{id}', [NocController::class, 'reject'])->name('noc.reject');
+    Route::post('/apply-for-noc/approve', [NocController::class, 'approve'])->name('apply-for-noc.approve');
     Route::resource('apply-for-noc', App\Http\Controllers\Admin\Noc\NocController::class);
 
     // listing
     Route::get('new-applications', [App\Http\Controllers\Admin\Noc\ListingController::class, 'newApplications'])->name('newApplications');
 
-
-
-
+    Route::get('/nocs', [NocController::class, 'index'])->name('nocs.index');
+    Route::post('/apply-for-noc/{id}/reject', [NocController::class, 'reject'])->name('apply-for-noc.reject');
     // Users Roles n Permissions
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::get('users/{user}/toggle', [App\Http\Controllers\Admin\UserController::class, 'toggle'])->name('users.toggle');
@@ -72,7 +76,9 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
 });
 
+Route::post('/noc/approve/{id}', [NocController::class, 'approve'])->name('approve.noc');
 
+Route::post('/noc/store', [NocController::class, 'store'])->name('noc.store');
 
 
 Route::get('/php', function (Request $request) {

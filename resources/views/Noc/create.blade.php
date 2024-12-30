@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
-                                
+
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="name">Applicant Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="applicant_name" name="applicant_name" type="text" placeholder="Enter Applicant Name">
@@ -64,14 +64,29 @@
                                     <span class="text-danger is-invalid addhar_no_err"></span>
                                 </div>
 
-                                @foreach ($documents as $documents)
+
+                                {{-- <div class="col-md-4">
+                                    <label class="col-form-label" for="doc">Upload Documents:<span class="text-danger">*</span></label>
+                                    <input type="file" name="doc[]" id="doc" multiple accept=".pdf,.jpg,.png,.docx" required />
+                                </div> --}}
+
+
+                                {{-- @foreach ($documents as $documents)
                                     <div class="col-md-4">
                                         <label class="col-form-label" for="docs">{{ $documents->document_name }} ( {{ $documents->document_name_in_marathi }} ) @if($documents->is_required == '1')<span class="text-danger">*</span> @endif</label>
                                         <input class="form-control" id="docs" name="doc[]" type="file" @if($documents->is_required == '1') required @endif>
                                         <input type="hidden" name="doc_id[]" value="{{ $documents->id }}">
                                         <span class="text-danger is-invalid docs_err"></span>
+
                                     </div>
-                                @endforeach
+                                @endforeach --}}
+
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="file">Upload document <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="file" name="file" type="file" required>
+                                    <span class="text-danger is-invalid upload_document_err"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -143,6 +158,31 @@
         });
      });
 
+     document.getElementById("nocForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = new FormData(this);
+        try {
+            const response = await fetch("/noc/store", {
+                method: "POST",
+                body: form,
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                },
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.success);
+            } else {
+                console.error(result.message || "An error occurred");
+                alert("Failed to create NOC");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An unexpected error occurred");
+        }
+    });
 </script>
 
 

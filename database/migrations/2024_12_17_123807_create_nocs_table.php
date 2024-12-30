@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address_of_property')->nullable();
             $table->string('phone_no')->nullable();
             $table->string('addhar_no')->nullable();
+
             $table->enum('approval_status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('application_id')->nullable();
             $table->integer('document_id')->nullable();
             $table->string('file_path')->nullable();
+            $table->boolean('is_image')->default(0);
             $table->timestamps();
         });
     }

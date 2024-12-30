@@ -11,7 +11,7 @@ class Noc extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['application_id', 'applicant_name', 'date', 'property_type', 'address_of_applicant', 'address_of_property', 'phone_no', 'addhar_no', 'approval_status'];
+    protected $fillable = ['application_id', 'applicant_name', 'date', 'property_type', 'address_of_applicant', 'address_of_property', 'phone_no', 'addhar_no', 'document','file_name', 'file_path', 'approval_status'];
 
 
     public static function booted()
@@ -44,4 +44,22 @@ class Noc extends Model
             }
         });
     }
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_REJECTED = 2;
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->status) {
+            case self::STATUS_PENDING:
+                return 'Pending';
+            case self::STATUS_APPROVED:
+                return 'Approved';
+            case self::STATUS_REJECTED:
+                return 'Rejected';
+            default:
+                return 'Unknown';
+        }
+    }
 }
+
