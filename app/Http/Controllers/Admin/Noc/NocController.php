@@ -11,6 +11,8 @@ use App\Http\Requests\Admin\NOC\StoreNocRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 
 class NocController extends Controller
@@ -18,8 +20,25 @@ class NocController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function downloadNocPDF($id)
+     {
+         // Fetch the NOC data by ID
+
+         $nocData = Noc::findOrFail($id);
+
+         $propertyTypes = PropertyType::all(); // Fetch property types if needed
+
+         // Load a view and pass the data to it
+         $pdf = PDF::loadView('pdf.noc_details', compact('nocData', 'propertyTypes'));
+
+         // Download the PDF
+         return $pdf->download('noc_details' . $nocData->application_id . '.pdf');
+     }
+
     public function index()
     {
+        // $nocDataList = NocData::all();
         $nocs = Noc::all(); // Adjust this query as needed
         $propertyTypes = PropertyType::latest()->get();
         $documents = Documents::latest()->get();
@@ -42,26 +61,19 @@ class NocController extends Controller
 
             // Handle document uploads
             $request->validate([
-                'file' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:2048', // Adjust the rules as needed
+                'file' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             ]);
             $file = $request->file('file');
             $filePath = $file->store('documents', 'public');
 
-            // Document::create([
-            // 'file_name' => $file->getClientOriginalName(),
-            // 'file_path' => $filePath,  ]);
+            DB::table('noc_documents')->insert([
+                'application_id' => $application->id,
+                // 'document_id' => $request->input('document_id'),
+                'file_path' => $filePath,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-            // Handle image upload (assuming 'image' is the name of the image input field)
-            // if ($request->hasFile('image')) {
-            //     $image = $request->file('image');
-            //     $imagePath = $image->store('images', 'public');
-            //     DB::table('noc_documents')->insert([
-            //         'application_id' => $application->id,
-            //         'document_id' => null, // Assuming no document_id for images
-            //         'file_path' => $imagePath,
-            //         'is_image' => 1, // Add a flag if required to differentiate between docs and images
-            //     ]);
-            // }
 
             DB::commit();
             return response()->json(['success' => 'NOC created successfully!']);
@@ -77,11 +89,14 @@ class NocController extends Controller
      */
     public function show(string $id)
     {
-        $nocData = Noc::find($id);
-        $noc_documents = DB::table('noc_documents')->join('documents', 'noc_documents.document_id', '=', 'documents.id')
-            ->where('application_id', $id)
-            ->get();
-        $propertyTypes = PropertyType::latest()->get();
+
+        $nocData = Noc::join('noc_documents', 'noc_documents.application_id', '=', 'nocs.id')->where('nocs.id', $id)->first();
+
+        $noc_documents = DB::table('nocs')->join('noc_documents', 'noc_documents.application_id', '=', 'nocs.id')->get();
+
+        // dd($noc_documents);
+        $propertyTypes = PropertyType::all();
+        // $noc = Noc::find($id);
         return view('Noc.show')->with(['nocData' => $nocData, 'noc_documents' => $noc_documents, 'propertyTypes' => $propertyTypes]);
     }
 
@@ -176,8 +191,9 @@ class NocController extends Controller
             $noc->save();
 
             if ($request->status == "1") {
-                $noc->status = 'approved'; // Final approval
-                $message = "Application Approved Successfully";
+                $noc->status = 'final_approved'; // Final approval
+                dd($noc);
+                $message = "Application Approved Successfully. <a href='". route('download.pdf', $noc->id) . "'>Click here to download the approval PDF</a>";
             } else {
                 $noc->status = 'rejected';
                 $message = "Application Rejected Successfully";
@@ -186,6 +202,10 @@ class NocController extends Controller
             return redirect()->back()->with('message', $message);
         }
     }
+
+
+
+
 }
 
 

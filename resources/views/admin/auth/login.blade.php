@@ -76,7 +76,7 @@
                     background-image: none;
                     background-color: #fff;
                     height: auto;
-                    display: flex: 
+                    display: flex:
                     justify-content: center;
                 }
 
@@ -110,15 +110,23 @@
                     color: #fff!important;
                 }
             }
+            .back-ground
+            {
+margin-left:94%
+            }
         </style>
     </head>
     <body>
         <section class="">
             <div class="container-flud">
                 <div class="row">
-                    <div class="bg-img col-lg-6 col-md-6 col-12 d-flex justify-content-center">
-                        <img class="d-md-none d-lg-none d-xl-none d-sm-block d-block mt-4" src="{{ asset('admin/images/Group 1 copy 2.png') }}" style="width: 300px;">
+                    {{-- @php margin
+                    dd(asset('admin/images/sewagemanagement.jpg'));
+                @endphp --}}
+                    <div class="bg-img col-lg-6 col-md-6 col-12 d-flex justify-content-center" >
+                        <img class="back-ground" src="{{ asset('admin/images/sewage management.jpg') }}">
                     </div>
+
                     <div class="col-lg-6 col-md-6 col-12 d-md-none d-lg-none d-xl-none d-sm-block d-block mobile-view-bgcolor">
                         <img src="{{ asset('admin/images/banner.jpg') }}" style="width: 100%" alt="">
                     </div>
@@ -283,7 +291,7 @@
             document.getElementById('password-addon').addEventListener('click', function () {
                 var passwordInput = document.getElementById('password');
                 var icon = this.querySelector('i');
-                
+
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
                     icon.classList.remove('fa-eye');
@@ -302,25 +310,25 @@
         var myModal = new bootstrap.Modal(document.getElementById('signupModal'));
         myModal.show();
         });
-    
+
         // Optional: Handling form submission
         document.getElementById('signupForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
-    
+
         const name = document.getElementById('signupName').value;
         const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
-    
+
         // Basic validation
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
             return;
         }
-    
+
         // Proceed with form submission logic (e.g., API call, etc.)
         console.log('User signed up:', { name, email, password });
-    
+
         // Close the modal
         var myModal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
         myModal.hide();

@@ -13,6 +13,10 @@ class Documents extends Model
 
     protected $fillable = ['document_name', 'is_required', 'document_name_in_marathi'];
 
+    public function noc()
+    {
+        return $this->belongsTo(Noc::class, 'application_id');
+    }
 
     public static function booted()
     {
@@ -42,6 +46,11 @@ class Documents extends Model
                     'deleted_by'=> Auth::user()->id,
                 ]);
             }
+
         });
+
     }
 }
+
+// In NocDocument model (App\Models\NocDocument)
+

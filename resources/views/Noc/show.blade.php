@@ -6,9 +6,10 @@
     <div class="row" id="addContainer">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">NOC Details</h4>
-                </div>
+            <div class="card-header d-flex justify-content-between">
+                <h4 class="card-title">NOC Details</h4>
+
+            </div>
                 <div class="card-body">
                     <div class="mb-3 row">
 
@@ -50,6 +51,17 @@
                         <div class="col-md-4">
                             <label class="col-form-label" for="addhar_no">Addhar No<span class="text-danger">*</span></label>
                             <input class="form-control" id="addhar_no" name="addhar_no" type="text" placeholder="Enter Addhar No" value="{{ $nocData->addhar_no }}" readonly>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="col-form-label" for="file_path">Document<span class="text-danger">*</span></label>
+                            <input class="form-control" id="file_path" name="file_path" type="file">
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/'.$nocData->file_path) }}" target="_blank" class="btn btn-link">View Document</a>
+                            </div>
+
+
+                            <span class="text-danger is-invalid aadhar_pans_err"></span>
                         </div>
 
 
@@ -143,7 +155,7 @@
                                             </tr>
                                             <tr>
                                                 <td>5</td>
-                                                <td>HOD</td>
+                                                <td>City Engineer</td>
                                                 <td>
                                                     @if($nocData->city_eng_status == 0)
                                                         <b>Pending by City Engineer</b>

@@ -65,21 +65,7 @@
                                 </div>
 
 
-                                {{-- <div class="col-md-4">
-                                    <label class="col-form-label" for="doc">Upload Documents:<span class="text-danger">*</span></label>
-                                    <input type="file" name="doc[]" id="doc" multiple accept=".pdf,.jpg,.png,.docx" required />
-                                </div> --}}
 
-
-                                {{-- @foreach ($documents as $documents)
-                                    <div class="col-md-4">
-                                        <label class="col-form-label" for="docs">{{ $documents->document_name }} ( {{ $documents->document_name_in_marathi }} ) @if($documents->is_required == '1')<span class="text-danger">*</span> @endif</label>
-                                        <input class="form-control" id="docs" name="doc[]" type="file" @if($documents->is_required == '1') required @endif>
-                                        <input type="hidden" name="doc_id[]" value="{{ $documents->id }}">
-                                        <span class="text-danger is-invalid docs_err"></span>
-
-                                    </div>
-                                @endforeach --}}
 
 
                                 <div class="col-md-4">
@@ -87,6 +73,7 @@
                                     <input class="form-control" id="file" name="file" type="file" required>
                                     <span class="text-danger is-invalid upload_document_err"></span>
                                 </div>
+                                {{-- <input type="hidden" name="document_id" value="{{ $documentId }}"> --}}
                             </div>
 
                         </div>

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\Admin\NOC\NocController;
+use App\Models\Noc;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ Route::middleware(['guest', 'PreventBackHistory', 'firewall.all'])->group(functi
     Route::post('citizen-register', [App\Http\Controllers\Admin\AuthController::class, 'citizenRegister'])->name('citizenRegister');
 });
 
+Route::get('/download-pdf/{id}', [NocController::class, 'downloadPdf'])->name('download.pdf');
 
 
 
@@ -66,6 +69,9 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
 
     Route::get('/nocs', [NocController::class, 'index'])->name('nocs.index');
     Route::post('/apply-for-noc/{id}/reject', [NocController::class, 'reject'])->name('apply-for-noc.reject');
+
+    Route::get('/nocs/{id}/documents', [NocController::class, 'getDocuments'])->name('nocs.documents');
+
     // Users Roles n Permissions
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::get('users/{user}/toggle', [App\Http\Controllers\Admin\UserController::class, 'toggle'])->name('users.toggle');
@@ -74,6 +80,16 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::get('users/{user}/get-role', [App\Http\Controllers\Admin\UserController::class, 'getRole'])->name('users.get-role');
     Route::put('users/{user}/assign-role', [App\Http\Controllers\Admin\UserController::class, 'assignRole'])->name('users.assign-role');
     Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+
+
+    //  Route::get('download/{id}.pdf', [App\Http\Controllers\Admin\Noc\NocController::class, 'downloadPDF'])->name('download.pdf');
+
+    Route::get('download-pdf/{id}', [PDFController::class, 'downloadApplicationsPDF'])->name('download.pdf');
+
+    // Route::get('/download-applications-pdf', [PDFController::class, 'downloadApplicationsPDF'])->name('applications.pdf');
+
+    // Route::get('noc/{id}/download', [PDFController::class, 'downloadApplicationsPDFapplication'])->name('applications.pdf');
+
 });
 
 Route::post('/noc/approve/{id}', [NocController::class, 'approve'])->name('approve.noc');

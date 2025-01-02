@@ -51,6 +51,23 @@
                     @php $roleName = Auth::user()->roles[0]->name; @endphp
                     @if (Auth::user()->hasRole($roleName))
 
+                     {{-- <div class="card-footer text-center"> --}}
+                        {{-- <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a> --}}
+                         {{-- @if($nocData)
+
+                        <a href="{{ route('download.pdf', $nocData->id) }}" class="btn btn-success">Download PDF</a>
+                    @else
+                        <p>Data not found.</p>
+                    @endif
+                    </div> --}}
+
+                    {{-- <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <a href="{{ route('applications.pdf','$nocData->id') }}" class="btn btn-primary">Download PDF</a>
+                        </div>
+                    </div> --}}
+                    <a href="{{ route('download.pdf', $noc->id) }}" class="btn btn-success">Download PDF</a>
+
 
                                 <a href="{{ route('apply-for-noc.show', $noc->id) }}" class="btn btn-info btn-sm" title="View">
                             <i data-feather="eye"></i>
