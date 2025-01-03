@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Documents;
+use App\Models\User;
+use App\Models\Ward;
+use App\Models\PropertyType;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-        $docs = Documents::latest()->get();
-        return view('admin.dashboard')->with(['docs' => $docs]);
+
+        $totalUsers = User::count();
+        $wards =Ward::count();
+     $property=PropertyType::count();
+     $docs = Documents::latest();
+        return view('admin.dashboard')->with(['docs' => $docs,'totalUsers'=>$totalUsers,'wards'=>$wards,'property'=>$property]);
     }
 
     public function changeThemeMode()

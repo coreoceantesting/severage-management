@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Noc;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Noc;
 use Illuminate\Support\Facades\Auth;
 
